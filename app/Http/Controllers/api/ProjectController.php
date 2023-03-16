@@ -31,7 +31,8 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $project = Project::where('id', $id)->get();
+        return response()->json($project);
     }
 
     /**

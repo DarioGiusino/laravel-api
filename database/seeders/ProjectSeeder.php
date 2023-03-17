@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Project;
 use App\Models\Technology;
 use App\Models\Type;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
@@ -21,11 +22,15 @@ class ProjectSeeder extends Seeder
         $types_count = Type::select('id')->pluck('id')->toArray();
 
         $technologies = Technology::select('id')->pluck('id')->toArray();
+        $users_count = User::select('id')->pluck('id')->toArray();
+
 
         for ($i = 0; $i < 8; $i++) {
             // create new istance
             $project = new Project();
 
+            //user_id foreign key
+            $project->user_id = Arr::random($users_count);
             //type_id foreign key
             $project->type_id = Arr::random($types_count);
             // fill cols with faker utils

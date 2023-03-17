@@ -46,4 +46,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Project::class);
     }
+
+    // link to user table (one-to-one)
+    public function details()
+    {
+        return $this->hasOne(UserDetail::class, 'user_id', 'id');
+    }
 }

@@ -37,8 +37,8 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col">ID</th>
           <th scope="col">Title</th>
+          <th scope="col">Author</th>
           <th scope="col">Type</th>
           <th scope="col">Technologies</th>
           <th scope="col">Status</th>
@@ -48,11 +48,11 @@
       <tbody>
         @forelse ($projects as $project)
           <tr>
-            {{-- project id --}}
-            <th scope="row">{{ $project->id }}</th>
-
             {{-- project title --}}
-            <td>{{ $project->title }}</td>
+            <th scope="row">{{ $project->title }}</th>
+
+            {{-- project author --}}
+            <td>{{ $project->author?->name ?? 'Anonimo' }}</td>
 
             {{-- project type --}}
             {{-- ? null safe operator <td>{{ $project->type?->label }}</td>  --}}

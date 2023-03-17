@@ -132,6 +132,11 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        if ($project->user_id !== Auth::id()) {
+            return to_route('admin.projects.index')->with('message', "Access denied to $project->title")->with('type', 'info');
+        }
+
+
         $types = Type::all();
         $technologies = Technology::all();
         $project_technologies = $project->technologies->pluck('id')->toArray();
@@ -189,7 +194,7 @@ class ProjectController extends Controller
         if (Arr::exists($data, 'technologies')) $project->technologies()->sync($data['technologies']);
         else $project->technologies()->detach();
 
-        return to_route('admin.projects.show', $project->id)->with('message', "$project->title updated succesfully.")->with('type', 'warning');;
+        return to_route('admin.projects.show', $project->id)->with('message', "$project->title updated succesfully.")->with('type', 'warning');
     }
 
     /**

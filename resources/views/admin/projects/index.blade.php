@@ -84,12 +84,15 @@
             {{-- project buttons --}}
             <td class="text-end">
               <a class="btn btn-sm btn-primary" href="{{ route('admin.projects.show', $project->id) }}">Open</a>
-              <a class="btn btn-sm btn-warning" href="{{ route('admin.projects.edit', $project->id) }}">Edit</a>
-              <form class="d-inline delete-form" action="{{ route('admin.projects.destroy', $project->id) }}"
-                method="post" data-form="{{ $project->title }}">
-                @csrf @method('delete')
-                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-              </form>
+
+              @if ($project->user_id === Auth::id())
+                <a class="btn btn-sm btn-warning" href="{{ route('admin.projects.edit', $project->id) }}">Edit</a>
+                <form class="d-inline delete-form" action="{{ route('admin.projects.destroy', $project->id) }}"
+                  method="post" data-form="{{ $project->title }}">
+                  @csrf @method('delete')
+                  <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+              @endif
             </td>
           </tr>
         @empty

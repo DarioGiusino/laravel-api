@@ -52,11 +52,13 @@
     <div class="d-flex align-items-center justify-content-between mb-5">
 
       {{-- delete button --}}
-      <form class="d-inline delete-form" action="{{ route('admin.projects.destroy', $project->id) }}" method="post"
-        data-form="{{ $project->title }}">
-        @csrf @method('delete')
-        <button class="btn btn-sm btn-danger">Delete</button>
-      </form>
+      @if ($project->user_id === Auth::id())
+        <form class="d-inline delete-form" action="{{ route('admin.projects.destroy', $project->id) }}" method="post"
+          data-form="{{ $project->title }}">
+          @csrf @method('delete')
+          <button class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      @endif
 
       {{-- status --}}
       <div>
@@ -66,7 +68,9 @@
 
       {{-- edit + go back buttons --}}
       <div>
-        <a class="btn btn-sm btn-warning" href="{{ route('admin.projects.edit', $project->id) }}">Edit</a>
+        @if ($project->user_id === Auth::id())
+          <a class="btn btn-sm btn-warning" href="{{ route('admin.projects.edit', $project->id) }}">Edit</a>
+        @endif
         <a class="btn btn-sm btn-secondary" href="{{ route('admin.projects.index') }}">Go back</a>
       </div>
     </div>

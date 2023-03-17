@@ -9,6 +9,7 @@ use App\Models\Type;
 use Illuminate\Http\Request;
 use Faker\Generator as Faker;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
@@ -104,6 +105,9 @@ class ProjectController extends Controller
 
         // define publish or not
         $project->is_published = Arr::exists($data, 'is_published');
+
+        // define the project author as the user logged
+        $project->user_id = Auth::id();
 
         // save new project on db
         $project->save();

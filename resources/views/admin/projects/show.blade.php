@@ -33,6 +33,7 @@
       {{-- description --}}
       <div class="col p-3">{{ $project->description }}</div>
 
+      {{-- technologies --}}
       <div class="col-12 mt-3">
         <strong>Technologies: </strong>
         @forelse ($project->technologies as $technology)
@@ -41,6 +42,7 @@
         @empty
           -
         @endforelse
+        <strong class="ms-5">Author: </strong><span>{{ $project->author->name }}</span>
       </div>
 
     </div>

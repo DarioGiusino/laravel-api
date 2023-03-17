@@ -22,4 +22,10 @@ class Project extends Model
     {
         return $this->belongsToMany(Technology::class);
     }
+
+    // link to user table
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

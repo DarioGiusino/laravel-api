@@ -42,7 +42,7 @@
         @empty
           -
         @endforelse
-        <strong class="ms-5">Author: </strong><span>{{ $project->author->name }}</span>
+        <strong class="ms-5">Author: </strong><span>{{ $project->author?->name ?? 'Anonimo' }}</span>
       </div>
 
     </div>

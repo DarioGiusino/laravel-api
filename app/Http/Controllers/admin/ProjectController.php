@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Faker\Generator as Faker;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
@@ -106,6 +107,9 @@ class ProjectController extends Controller
         // define publish or not
         $project->is_published = Arr::exists($data, 'is_published');
 
+        // define slug
+        $project->slug = Str::slug($data['title'], '-');
+
         // define the project author as the user logged
         $project->user_id = Auth::id();
 
@@ -187,6 +191,8 @@ class ProjectController extends Controller
 
         // define publish or not
         $data['is_published'] = Arr::exists($data, 'is_published');
+        // define slug
+        $project->slug = Str::slug($data['title'], '-');
 
         $project->update($data);
 

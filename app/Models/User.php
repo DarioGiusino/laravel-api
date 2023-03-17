@@ -52,4 +52,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserDetail::class, 'user_id', 'id');
     }
+
+    // full name method
+    public function getFullName()
+    {
+        return $this->details?->first_name . ' ' . $this->details?->last_name;
+    }
 }

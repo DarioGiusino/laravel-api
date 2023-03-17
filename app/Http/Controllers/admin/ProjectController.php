@@ -93,10 +93,17 @@ class ProjectController extends Controller
         // create a new project
         $project = new Project();
 
+        // define slug
+        $project->slug = Str::slug($data['title'], '-');
+
         // check if an image is given
         if (Arr::exists($data, 'image')) {
+            // take the image extension
+            $extension = $data['image']->extension();
+            // build the image file name with the slug (unique causa depends on title witch is unique) + extension
+            $file_name = "$project->slug.$extension";
             // define a variable where the file is saved in a path storage/app/public/{} that return a correct URL
-            $img_url = Storage::put('projects', $data['image']);
+            $img_url = Storage::putFileAs('projects', $data['image'], $file_name);
             // change the file given with the correct url
             $data['image'] = $img_url;
         }
@@ -106,9 +113,6 @@ class ProjectController extends Controller
 
         // define publish or not
         $project->is_published = Arr::exists($data, 'is_published');
-
-        // define slug
-        $project->slug = Str::slug($data['title'], '-');
 
         // define the project author as the user logged
         $project->user_id = Auth::id();
@@ -178,21 +182,25 @@ class ProjectController extends Controller
         );
 
         $data = $request->all();
+        // define slug
+        $project->slug = Str::slug($data['title'], '-');
 
         // check if an image is given
         if (Arr::exists($data, 'image')) {
             // if exists an image, delete it to make space for the newest
             if ($project->image) Storage::delete($project->image);
+            // take the image extension
+            $extension = $data['image']->extension();
+            // build the image file name with the slug (unique causa depends on title witch is unique) + extension
+            $file_name = "$project->slug.$extension";
             // define a variable where the file is saved in a path storage/app/public/{} that return a correct URL
-            $img_url = Storage::put('projects', $data['image']);
+            $img_url = Storage::putFileAs('projects', $data['image'], $file_name);
             // change the file given with the correct url
             $data['image'] = $img_url;
         }
 
         // define publish or not
         $data['is_published'] = Arr::exists($data, 'is_published');
-        // define slug
-        $project->slug = Str::slug($data['title'], '-');
 
         $project->update($data);
 

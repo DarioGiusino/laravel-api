@@ -33,9 +33,9 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $slug)
     {
-        $project = Project::where('id', $id)->with('technologies', 'type')->first();
+        $project = Project::where('slug', $slug)->with('technologies', 'type')->first();
 
         if ($project->image) $project->image = url('storage/' . $project->image);
 
